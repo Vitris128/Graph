@@ -42,7 +42,7 @@ void initGraph(Graph* pG, int n) {
 }
 
 void addEdge(Graph* pG, int u, int v) {
-    pG->A[u][v] = 1;
+    pG->A[u][v]++;
 }
 
 
@@ -60,11 +60,9 @@ void ranking(Graph* G) {
     List S1, S2;
     makeNullList(&S1);
     for(u=1;u<=G->n;u++)
-        if(d[u]==0) {
+        if(d[u]==0)
             pushBack(&S1, u);
-            printf("%d ",u);
-        }
-    int k = 1, i;
+    int k = 0, i;
     while(S1.size > 0) {
         makeNullList(&S2);
         for(i=1;i<=S1.size;i++) {
@@ -74,10 +72,8 @@ void ranking(Graph* G) {
             for(v = 1; v <= G->n;v++)
                 if(G->A[u][v] != 0) {
                     d[v]--;
-                    if(d[v] == 0) {
+                    if(d[v] == 0)
                         pushBack(&S2, v);
-                        printf("%d ",v);
-                    }
                 }
         }
         copyList(&S1, &S2);
@@ -96,5 +92,7 @@ int main() {
         addEdge(&G, u, v);
     }
     ranking(&G);
+    for(i=1;i<=n;i++)
+        printf("r[%d] = %d\n",i,rank[i]);
     return 0;
 }
